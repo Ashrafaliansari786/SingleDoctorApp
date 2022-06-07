@@ -219,7 +219,7 @@ const Report = require('../models/reportModel');
          success : false,
          message : error.message
       })
-     }
+     } 
   });
     // get Prescriptions details
     exports.getPrescriptions = catchAsyncErrors(async( req, res) => {
@@ -319,6 +319,8 @@ const Report = require('../models/reportModel');
         patientId : req.user._id,
         document
       }
+      //res.status(200).json({reportData});
+
       await Report.create(reportData);
       res.status(200).json({
         success : true,

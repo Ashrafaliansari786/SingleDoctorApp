@@ -50,6 +50,7 @@ const userSchema = new mongoose.Schema({
     about : String,
     clinic_details : String,
     academic : String,
+   
     certificate : {
         public_id : String,
         url : String
@@ -115,6 +116,13 @@ const userSchema = new mongoose.Schema({
         type : Number,
         default : 1
     },
+    fee : {
+        type : Number,
+        default : 0
+    },
+    marchantId : String,
+    marchantKey : String,
+    email_template : String,
     resetPasswordToken : String,
     resetPasswordExpire : Date,
     //patients

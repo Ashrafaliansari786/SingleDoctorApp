@@ -166,6 +166,35 @@ export const updatePassword =
     }
   };
 
+export const updateCredentail =
+  (marchantId, marchantKey) => async (dispatch) => {
+    try {
+      dispatch({
+        type: "updateCredentialRequest",
+      });
+      const { data } = await axios.put(
+        "/api/v1/update/credential",
+        { marchantId, marchantKey },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": localStorage.getItem("token"),
+          },
+        }
+      );
+      dispatch({
+        type: "updateCredentialSuccess",
+        payload: data.message,
+      });
+      console.log(data.message);
+    } catch (error) {
+      dispatch({
+        type: "updateCredentialFailure",
+        payload: error.response.data.message,
+      });
+    }
+  };
+
 // Reset password
 
 export const resetPassword = (otp) => async (dispatch) => {
@@ -250,6 +279,70 @@ export const updateDoctorProfile =
         type: "UpdateDoctorFailure",
         payload: error.response.data.message,
       });
+    }
+  };
+
+export const updateDoctorFee =
+  (fee) => async (dispatch) => {
+    //console.log(fee);
+    try {
+      dispatch({
+        type: "UpdateDoctorFeeRequest",
+      });
+      const { data } = await axios.put(
+        "/api/v1/doctor/updateFee",
+        { fee },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": localStorage.getItem("token"),
+          },
+        }
+      );
+
+      dispatch({
+        type: "UpdateDoctorFeeSuccess",
+        payload: data.message,
+      });
+      //console.log(data.message);
+    } catch (error) {
+      dispatch({
+        type: "UpdateDoctorFeeFailure",
+        payload: error.response.data.message,
+      });
+     
+    }
+  };
+
+  export const updateDoctorEmailTemplate =
+  (email_template) => async (dispatch) => {
+    
+    try {
+      dispatch({
+        type: "UpdateDoctorEmailTemplateRequest",
+      });
+      const { data } = await axios.put(
+        "/api/v1/doctor/updateemailtemplate",
+        { email_template },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": localStorage.getItem("token"),
+          },
+        }
+      );
+
+      dispatch({
+        type: "UpdateDoctorEmailTemplateSuccess",
+        payload: data.message,
+      });
+      console.log(data.message);
+    } catch (error) {
+      dispatch({
+        type: "UpdateDoctorEmailTemplateFailure",
+        payload: error.response.data.message,
+      });
+     
     }
   };
 
@@ -344,9 +437,10 @@ export const updateClinicAwards =
 
   // Doctor details by id
 export const doctorDetailById = (userId) => async (dispatch) => {
+  //console.log('cddascsdcsd',userId);
   try {
     dispatch({
-      type: "GetUserDetailsRequest",
+      type: "GetUsersDetailsRequest",
     });
     const { data } = await axios.get(`/api/v1/doctor-details/${userId}`, {
       headers: {
@@ -354,16 +448,71 @@ export const doctorDetailById = (userId) => async (dispatch) => {
       },
     });
     dispatch({
-      type: "GetUserDetailsSuccess",
+      type: "GetUsersDetailsSuccess",
       payload: data.doctor,
     });
+    //console.log(data.doctor);
   } catch (error) {
     dispatch({
-      type: "GetUserDetailsFailure",
+      type: "GetUsersDetailsFailure",
       payload: error.response.data.message,
     });
   }
 };
+
+
+export const getPaymentDetails = (orderId) => async (dispatch) => {
+  //console.log('order',orderId);
+  try {
+    dispatch({
+      type: "GetUsersPaymentRequest",
+    });
+    const { data } = await axios.get(`/api/v1/payment-details/${orderId}`, {
+      headers: {
+        "auth-token": localStorage.getItem("token"),
+      },
+    });
+    dispatch({
+      type: "GetUsersPaymentSuccess",
+      payload: data.payment,
+    });
+    //console.log(data);
+  } catch (error) {
+    dispatch({
+      type: "GetUsersPaymentFailure",
+      payload: error.response.data.message,
+    });
+  }
+};
+
+
+// export const createPaytmPayment = (amount,email) => (dispatch) =>{
+//   try {
+//     dispatch({
+//       type: "getPaytmPaymentRequest",
+//     });
+//     const { data } = await axios.post(
+//       "/api/v1/paytm",
+//       { amount, email},
+//       {
+//         headers: {
+//           "Content-Type": "application/json",
+//           "auth-token": localStorage.getItem("token"),
+//         },
+//       }
+//     );
+
+//     dispatch({
+//       type: "getPaytmPaymentSuccess",
+//       payload: data,
+//     });
+//   } catch (error) {
+//     dispatch({
+//       type: "getPaytmPaymentFailure",
+//       payload: error.response.data.message,
+//     });
+//   }
+// };
 
 // create patient
 export const createPatient = (userValue) => async (dispatch) => {
@@ -816,6 +965,32 @@ export const editPrescription = (presId) => async (dispatch) => {
   }
 };
 
+export const getAllPrescriptionDetails = (patientId) => async (dispatch) => {
+  try {
+    dispatch({
+      type: "GetAllPrescriptionRequest",
+    });
+    const { data } = await axios.get(`/api/v1/get-all-prescription/${patientId}`, {
+      headers: {
+        "auth-token": localStorage.getItem("token"),
+      },
+    });
+    //console.log(data);
+    dispatch({
+      type: "GetAllPrescriptionSuccess",
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: "GetAllPrescriptionFailure",
+      payload: error.response.data.message,
+    });
+  }
+};
+
+
+
+
 // update test
 export const updatePrescription =  (presId, selectPatient, drugValue, testValue) => async (dispatch) => {
   try {
@@ -1070,6 +1245,7 @@ export const getDoctorAppointments = () => async (dispatch) => {
         "auth-token": localStorage.getItem("token"),
       },
     });
+    //console.log(data.appointments);
     dispatch({
       type: "GetDoctorAppointmentsSuccess",
       payload: data.appointments,
@@ -1080,7 +1256,45 @@ export const getDoctorAppointments = () => async (dispatch) => {
       payload: error.response.data.message,
     });
   }
-};
+}; 
+
+export const getDoctorMonthlyEarning = (doctorId) => async (dispatch) => {
+  //console.log(doctorId);
+  try {
+    dispatch({
+      type: "GetDoctorMonthlyEarningRequest",
+    });
+    const { data } = await axios.get(`/api/v1/doctor-monthly-earning/${doctorId}`, {
+      headers: {
+        "auth-token": localStorage.getItem("token"),
+      },
+    });
+    //console.log(data.appointments);
+    dispatch({
+      type: "GetDoctorMonthlyEarningSuccess",
+      payload: data.payment,
+    });
+    //console.log('testing',data);
+  } catch (error) {
+    dispatch({
+      type: "GetDoctorMonthlyEarningFailure",
+      payload: error.response.data.message,
+    });
+  }
+}; 
+
+// export const getDoctorAppointments = () => async (dispatch) => {
+//   try {
+//       const { data } = await axios.get('/api/v1/doctor-appointments',{
+//               headers: {
+//                 "auth-token": localStorage.getItem("token"),
+//               }});
+//       //console.log(data.appointments);
+//       dispatch({ type: "FETCH_Appointment", payload: data.appointments });
+//   } catch (error) {
+//       console.log('casdcasdcsad',error);
+//   }
+// };
 
 // get all doctor appointments
 export const getTodaysDoctorAppointments = () => async (dispatch) => {

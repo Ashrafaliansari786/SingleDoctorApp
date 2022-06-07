@@ -14,7 +14,7 @@ const SideBar = () => {
   return (
     <>
       <div className="deznav">
-        <div className="deznav-scroll">
+        <div className="">
           <ul className="metismenu" id="menu">
             <li>
               <Link className="ai-icon" to="/admin">

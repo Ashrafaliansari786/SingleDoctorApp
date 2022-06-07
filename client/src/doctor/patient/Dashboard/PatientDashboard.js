@@ -9,13 +9,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import Moment from 'moment';
 import DataTable from "react-data-table-component";
 import { Paper, Checkbox } from "@material-ui/core";
-import { Link } from "react-router-dom";
+import { Link ,useNavigate } from "react-router-dom";
 import { useAlert } from 'react-alert';
 import { getPatientDashboard} from '../../../Actions/User';
 
 const PatientDashboard = () => {
 
   const dispatch = useDispatch();
+  const history = useNavigate();
   let dt = Moment(new Date()).format('YYYY-MM-DD');
   useEffect(async () => {
     await dispatch(getPatientDashboard(dt));
@@ -58,6 +59,10 @@ const PatientDashboard = () => {
       confirmable: "Confirm",
       cancellable: "Cancel"
     }
+  }
+
+  const showSlots = (doctId) =>{
+    history(`/patient/create-appointment/${doctId}`)
   }
 
   const columns = [
@@ -155,12 +160,13 @@ const PatientDashboard = () => {
                       </h6>
                     </div>
                     <div className="col-5">
-                      <Link
+                    <button type="button" onClick={(e)=>{ showSlots('626cd04a857ce8a353529632')}} className="btn btn btn-primary float-right">New Appointment</button>
+                      {/* <Link
                         to="/patient/doctor-list"
                         className="btn btn-primary float-right mr-2"
                       >
                         <i className="fa fa-plus"></i> New Appointment
-                      </Link>
+                      </Link> */}
                     </div>
                   </div>
                 </div>

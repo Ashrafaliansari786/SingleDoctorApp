@@ -15,6 +15,8 @@ import DoctorDetails from "./DoctorDetails";
 
 const Profile = () => {
   const dispatch = useDispatch();
+
+
   const { loading, user} = useSelector((state)=>state.user);
 
   const [profileImage, setProfileImage] = useState({});
@@ -25,6 +27,10 @@ const Profile = () => {
   const [formErrors, setFormErrors] = useState({});
 
    // profile data update
+
+
+  //console.log('user',user);
+
   const intialValue = { name : user.name, academic: user.academic, specialist : user.specialist, about : user.about, patientNo: user.patientNo, surgery : user.surgery, experienceYear : user.experienceYear, departmentId : user.departmentId, department : user.department};
   const [profileValue, setProfileValue] = useState(intialValue);
   const handleChange = (e) =>{
@@ -38,6 +44,8 @@ const Profile = () => {
       setProfileValue({...profileValue, [e.target.name]: e.target.value});
     }
   }
+  
+
   const handleProfileSubmit = async (e) =>{
     e.preventDefault();
     let { name, academic, specialist, departmentId, department, about, patientNo, surgery, experienceYear } = profileValue;
@@ -165,6 +173,8 @@ const [expValue, setExpValue] = useState(user.experiences ? user.experiences : [
       dispatch({ type: "clearMessage" });
     }
   }, [formErrors, alert, error, dispatch, message]);
+
+ 
   
   return (
     <>
@@ -280,6 +290,7 @@ const [expValue, setExpValue] = useState(user.experiences ? user.experiences : [
                       accept="image/*"
                     />
                   </div>
+                  
 
                   </div>
                   <button type="submit" className="btn btn-primary">

@@ -1,6 +1,6 @@
 import Home from './components/Home';
 
-import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import { BrowserRouter  as Router, Routes, Route,HashRouter  } from 'react-router-dom';
 import Service from './components/Service';
 import Team from './components/Team';
 import BookAppointment from './components/BookAppointment';
@@ -32,6 +32,7 @@ import DoctorDashboard from './doctor/components/Dashboard/DoctorDashboard';
 import NewPatient from './doctor/components/Patient/NewPatient';
 import Patients from './doctor/components/Patient/Patients';
 import NewPrescription from './doctor/components/Prescription/NewPrescription';
+import EditPrescription from './doctor/components/Prescription/EditPrescription';
 import Prescriptions from './doctor/components/Prescription/Prescriptions';
 import NewDrug from './doctor/components/Drugs/NewDrug';
 import Drugs from './doctor/components/Drugs/Drugs';
@@ -79,8 +80,16 @@ import UpcommingAppointment from './doctor/patient/Appointment/UpcommingAppointm
 import FollowupAppointment from './doctor/patient/Appointment/FollowupAppointment';
 import CompletedAppointment from './doctor/patient/Appointment/CompletedAppointment';
 import PatientWiseAppointments from './doctor/components/Appointment/PatientWiseAppointments';
+import PatientHistory from './doctor/components/Appointment/PatientHistory';
 import UpdatePassword from './components/UpdatePassword';
 import SetAdminPassword from './doctor/admin/Auth/SetAdminPassword';
+import AppointmentsFee from './doctor/components/Appointment/AppointmentsFee';
+import EmailTemplate from './doctor/components/Appointment/EmailTemplate';
+import PaymentCredential from './doctor/components/payment/PaymentCredential';
+import PaymentSuccess from './doctor/patient/payment/PaymentSuccess';
+import DoctorPaymentSuccess from './doctor/components/payment/DoctorPaymentSuccess';
+import Transaction from './doctor/components/payment/Transaction';
+
 
 const App = () => {
  const dispatch = useDispatch();
@@ -96,7 +105,7 @@ const App = () => {
  
   return (
     <div id='main-wrapper' className={`shows ${menuToggle ? menuToggle.isToggle : ''}`}>
-     {loading === true ? <Loader /> : (<Router>
+     {loading === true ? <Loader /> : (<Router >
            <Routes>
               <Route path="*" element={<Error404 />} />
               <Route exact path="/video-chat" element={ user && user.role ==='patient' ? <Dashboard/> : ''} />
@@ -121,12 +130,15 @@ const App = () => {
 
               {/* for doctors */}
               <Route exact path='/doctor/profile' element={<Profile />} />
+              <Route exact path='/doctor/all-payment' element={<Transaction />} />
               <Route exact path='/doctor' element={ user &&  user.role ==='doctor' ? <DoctorDashboard/> : <Login/>} />
               <Route exact path='/patient/create' element={ user &&  user.role ==='doctor' ? <NewPatient /> : <Login/>} />
               <Route exact path='/patients' element={ user &&  user.role ==='doctor' ? <Patients /> : <Login/>} />
 
               <Route exact path='/create-prescription/:appId' element={ user &&  user.role ==='doctor' ? <NewPrescription/> : <Login/>} />
-              <Route exact path='/edit-prescription/:presId' element={ user &&  user.role ==='doctor' ?<NewPrescription/> : '' } />
+
+              <Route exact path='/edit-prescription/:presId' element={ user &&  user.role ==='doctor' ?<EditPrescription/> : '' } />
+
               <Route exact path='/all-prescription' element={ user &&  user.role ==='doctor' ? <Prescriptions/> : <Login/>} />
               <Route exact path='/view-prescription/:presId' element= { user &&  user.role ==='doctor' ? <ViewPrescription/> : '' } />
 
@@ -145,8 +157,16 @@ const App = () => {
 
               <Route exact path='/create-appointment' element={ user &&  user.role ==='doctor' ? <CreateAppointment/> : <Login/>} />
               <Route exact path='/doctor-appointments' element={ user &&  user.role ==='doctor' ? <Appointments/> : <Login/>} />
+
               <Route exact path='/doctor-patient-appointments/:patientId' element={ user &&  user.role ==='doctor' ? <PatientWiseAppointments/> : <Login/>} />
 
+              <Route exact path='/doctor-patient-history/:patientId' element={ user &&  user.role ==='doctor' ? <PatientHistory/> : <Login/>} />
+
+              <Route exact path='/appointment-fee' element={ user &&  user.role ==='doctor' ? <AppointmentsFee /> : <Login/>} />
+              <Route exact path='/email-template' element={ user &&  user.role ==='doctor' ? <EmailTemplate/> : <Login/>} />
+              <Route exact path='/payment-credential' element={ user &&  user.role ==='doctor' ? <PaymentCredential/> : <Login/>} />
+
+              <Route exact path='/payment-status/:orderId' element={ user &&  user.role ==='doctor' ? <DoctorPaymentSuccess/> : <Login/>} />
               {/* Patient module */}
               <Route exact path='/patient' element={ user &&  user.role ==='patient' ? <PatientDashboard/> : <Login/>} />
               <Route exact path='/patient/profile' element={ user &&  user.role ==='patient' ? <PatientProfile/> : <Login/>} />
@@ -161,6 +181,7 @@ const App = () => {
               <Route exact path='/patient/upcomming-appointment' element={ user &&  user.role ==='patient' ? <UpcommingAppointment/> : <Login/>} />
               <Route exact path='/patient/completed-appointment' element={ user &&  user.role ==='patient' ? <CompletedAppointment/> : <Login/>} />
               <Route exact path='/patient/followup-appointment' element={ user &&  user.role ==='patient' ? <FollowupAppointment/> : <Login/>} />
+              <Route exact path='/patient/status/:orderId' element={ user &&  user.role ==='patient' ? <PaymentSuccess/> : <Login/>} />
 
                {/* Admin module */}
                <Route exact path="/admin/login" element={<AdminLogin />} />

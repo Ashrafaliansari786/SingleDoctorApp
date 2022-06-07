@@ -42,6 +42,7 @@ export const forgetPasswordReducer = createReducer(initialState, {
   EnquiryRequest : (state) =>{
     state.loading = true;
   },
+  
   EnquirySuccess : (state, action) =>{
       state.loading = false;
       state.message = action.payload;
@@ -321,6 +322,68 @@ export const patientsReducer = createReducer(initialState, {
   },
 });
 
+export const doctorDetailsReducer = createReducer(initialState, {
+  GetUsersDetailsRequest : (state) =>{
+      state.loading = true;
+  },
+  GetUsersDetailsSuccess : (state, action) =>{
+      state.loading = false;
+      state.doctorDetails = action.payload;
+  },
+  GetUsersDetailsFailure : (state, action) =>{
+      state.loading = false;
+      state.error = action.payload;
+  },
+  clearErrors: (state) => {
+    state.error = null;
+  },
+  clearMessage: (state) => {
+    state.message = null;
+  },
+});
+
+
+
+export const paymentDetailsReducer = createReducer(initialState, {
+  GetUsersPaymentRequest : (state) =>{
+      state.loading = true;
+  },
+  GetUsersPaymentSuccess : (state, action) =>{
+      state.loading = false;
+      state.paymentDetails = action.payload;
+  },
+  GetUsersPaymentFailure : (state, action) =>{
+      state.loading = false;
+      state.error = action.payload;
+  },
+  clearErrors: (state) => {
+    state.error = null;
+  },
+  clearMessage: (state) => {
+    state.message = null;
+  },
+});
+
+export const doctorMonthlyEarningReducer = createReducer(initialState, {
+  GetDoctorMonthlyEarningRequest : (state) =>{
+      state.loading = true;
+  },
+  GetDoctorMonthlyEarningSuccess : (state, action) =>{
+      state.loading = false;
+      state.doctorMonthlyEarning = action.payload;
+  },
+  GetDoctorMonthlyEarningFailure : (state, action) =>{
+      state.loading = false;
+      state.error = action.payload;
+  },
+  clearErrors: (state) => {
+    state.error = null;
+  },
+  clearMessage: (state) => {
+    state.message = null;
+  },
+});
+
 export const drugDataReducer = createReducer(initialState, {
   GetDrugsRequest : (state) =>{
       state.loading = true;
@@ -372,6 +435,26 @@ export const prescriptionReducer = createReducer(initialState, {
     state.prescriptions = action.payload;
   },
   GetPrescriptionFailure : (state, action) =>{
+      state.loading = false;
+      state.error = action.payload;
+  },
+  clearErrors: (state) => {
+    state.error = null;
+  },
+  clearMessage: (state) => {
+    state.message = null;
+  },
+});
+
+export const getAllPrescriptionReducer = createReducer(initialState, {
+  GetAllPrescriptionRequest : (state) => {
+    state.loading = true;
+  },
+  GetAllPrescriptionSuccess : (state, action) =>{
+    state.loading = false;
+    state.allPrescriptions = action.payload;
+  },
+  GetAllPrescriptionFailure : (state, action) =>{
       state.loading = false;
       state.error = action.payload;
   },
@@ -480,6 +563,26 @@ export const toggleReducer = createReducer(toggle, {
     state.menuToggle = action.payload;
   }
 });
+
+export const feeReducer = createReducer(initialState, {
+  UpdateDoctorFeeRequest : (state) => {
+    state.loading = true;
+  },
+  UpdateDoctorFeeSuccess : (state, action) =>{
+    state.loading = false;
+    state.feeApiStatus = action.payload;
+  },
+  UpdateDoctorFeeFailure : (state, action) =>{
+      state.loading = false;
+      state.error = action.payload;
+  },
+  clearErrors: (state) => {
+    state.error = null;
+  },
+  clearMessage: (state) => {
+    state.message = null;
+  },
+});
 /// side menu toggles
 
 export const slotsReducer = createReducer(initialState, {
@@ -524,24 +627,17 @@ export const dateSlotReducer = createReducer(initialState, {
   },
 });
 
-export const appointmentsReducer = createReducer(initialState, {
-  GetDoctorAppointmentsRequest : (state) => {
-    state.loading = true;
-  },
-  GetDoctorAppointmentsSuccess : (state, action) =>{
-    state.loading = false;
-    state.doctorAppointments = action.payload;
-  },
-  GetDoctorAppointmentsFailure : (state, action) =>{
-      state.loading = false;
-      state.error = action.payload;
-  },
+
+
+
+export const todayAppointmentsReducer = createReducer(initialState, {
+  
   GetTodayDoctorAppointmentsRequest : (state) => {
     state.loading = true;
   },
   GetTodayDoctorAppointmentsSuccess : (state, action) =>{
     state.loading = false;
-    state.doctorAppointments = action.payload;
+    state.todayDoctorAppointments = action.payload;
   },
   GetTodayDoctorAppointmentsFailure : (state, action) =>{
       state.loading = false;
@@ -554,6 +650,28 @@ export const appointmentsReducer = createReducer(initialState, {
     state.message = null;
   },
 });
+
+export const appointmentsReducer = createReducer(initialState, {
+  GetDoctorAppointmentsRequest : (state) => {
+    state.loading = true;
+  },
+  GetDoctorAppointmentsSuccess : (state, action) =>{
+    state.loading = false;
+    state.doctorAppointments = action.payload;
+  },
+  GetDoctorAppointmentsFailure : (state, action) =>{
+      state.loading = false;
+      state.error = action.payload;
+  },
+  
+  clearErrors: (state) => {
+    state.error = null;
+  },
+  clearMessage: (state) => {
+    state.message = null;
+  },
+});
+
 
 export const doctorsReducer = createReducer(initialState, {
   GetDoctorsRequest : (state) => {
@@ -574,6 +692,7 @@ export const doctorsReducer = createReducer(initialState, {
     state.message = null;
   },
 });
+
 
 
 export const patientAppointmentReducer = createReducer(initialState, {

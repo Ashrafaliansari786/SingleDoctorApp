@@ -118,12 +118,12 @@ const Appointments = () => {
                       <h4 className="card-title">All Appointments</h4>
                     </div>
                     <div className="col-md-6 text-right">
-                      <Link
+                      {/* <Link
                         to="/create-appointment"
                         className="btn btn-primary btn-sm"
                       >
                         <i className="fa fa-plus"></i> Create Appointment
-                      </Link>
+                      </Link> */}
                     </div>
                   </div>
                 </div>

@@ -21,6 +21,8 @@ const Prescriptions = () => {
 
   let { loading, prescriptions } = useSelector((state) => state.prescriptions);
 
+  //console.log(prescriptions);
+
   const options = {
     labels: {
       confirmable: "Confirm",
@@ -39,10 +41,13 @@ const Prescriptions = () => {
       alert.success("Prescription deleted successfully");
     }
   }
-
+  let all_drug = 0;
+  let all_test = 0
   let allPrescriptions = prescriptions && prescriptions.map((element, index)=>{
     let cdate = Moment(element.createdAt).format('DD MMMM YYYY HH:mm');
     let contents = `${element.drugs.length} Drugs ${element.drugs.length} Tests`;
+    all_drug = element.drugs && element.drugs.length;
+    all_test = element.tests && element.tests.length;
     element = {
       ...element,
       cdate : cdate,
@@ -70,9 +75,10 @@ const Prescriptions = () => {
     },
     {
       cell:(row) => <div class="text-center"><label class="badge badge-primary-soft">
-      1 Drugs
+
+      {all_drug} Drugs 
    </label> <label class="badge badge-primary-soft">
-      0 Tests
+      {all_test} Tests
    </label></div>,
       name: "CONTENT",
       selector: "contents",
@@ -81,9 +87,9 @@ const Prescriptions = () => {
     {
       cell:(row) => 
       <div className="d-flex">
-        <Link to={`/view-prescription/${row._id}`} className="btn btn-success shadow btn-sm sharp mr-1"><i className="fa fa-eye"></i></Link>
+        <Link to={`/view-prescription/${row.appointmentId}`} className="btn btn-success shadow btn-sm sharp mr-1"><i className="fa fa-eye"></i></Link>
         {/* <Link to={`/print-prescription/${row._id}`} className="btn btn-info shadow btn-sm sharp"><i className="fa fa-print"></i></Link> */}
-        <Link to={`/edit-prescription/${row._id}`} className="btn btn-primary shadow btn-sm sharp mr-1"><i className="fa fa-pencil"></i></Link>
+        <Link to={`/edit-prescription/${row.appointmentId}`} className="btn btn-primary shadow btn-sm sharp mr-1"><i className="fa fa-pencil"></i></Link>
         <button type='button' id={row._id} onClick={handleDeleteClick} className="btn btn-danger shadow btn-sm sharp"><i className="fa fa-trash"></i></button>
       </div>,
       name: "ACTIONS",

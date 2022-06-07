@@ -212,7 +212,7 @@ router.post('/paymentByDoctor', (req, res) => {
     params['ORDER_ID'] = orderId,
     params['CUST_ID'] = process.env.PAYTM_CUST_ID,
     params['TXN_AMOUNT'] = totalAmount,
-    params['CALLBACK_URL'] = 'http://localhost:5000/api/v1/payments/callbackByDoctors',
+    params['CALLBACK_URL'] = 'http://localhost:6000/api/v1/payments/callbackByDoctors',
     params['EMAIL'] = email,
     params['MOBILE_NO'] = phone
 
